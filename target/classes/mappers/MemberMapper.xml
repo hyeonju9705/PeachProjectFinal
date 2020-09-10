@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.board.mappers.Member">
+	<insert id="register">
+     insert into user(id,password,name,nickname,email,phonenumber,addr,age)
+      values(#{id},#{password},#{name},#{nickname},#{email},#{phonenumber},#{addr},#{age})   
+    </insert>
+
+ 	<select id="login" resultType="com.peach.domain.UserVO">
+ 		select
+     		id, name ,type
+ 		from
+     	user
+ 			where id = #{id}
+     		and password = #{password}
+	</select>
+</mapper>

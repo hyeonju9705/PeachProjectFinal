@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.board.mappers.Offline">
+
+	<select id='list' resultType="com.peach.domain.OfflineVO">
+		select
+			no, name, addr, phone,writer
+		from Offline_Store
+	</select>
+
+	<!-- 게시물 작성 -->
+	<insert id="write" parameterType="com.peach.domain.OfflineVO">
+ 		insert into
+ 		 	Offline_Store(name, addr, phone,writer)
+   				values(#{name}, #{addr}, #{phone},#{writer})
+    </insert>
+    <!-- 게시물 목록 + 페이징 + 검색 -->
+	<select id="listPageSearch" parameterType="hashMap" resultType="com.peach.domain.OfflineVO">
+ 		select
+  		name,addr,writer,phone
+ 		from Offline_Store
+ 
+ 	<if test='searchType.equals("name")'>
+  		WHERE name LIKE concat('%', #{keyword}, '%')
+ 	</if>
+ 	order by no desc
+  		limit #{displayPost}, #{postNum}
+  	</select>
+  	<!-- 게시물 총 갯수 + 검색 적용 -->
+	<select id="searchCount" parameterType="hashMap" resultType="int">
+ 		select count(no) from Online_Store 
+  
+	 <if test='searchType.equals("name")'>
+  		WHERE name LIKE concat('%', #{keyword}, '%')
+ 	</if>
+	</select>
+ 
+</mapper>
